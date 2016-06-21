@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="navArray">
+        <item>Announcement</item>
+        <item>Notes</item>
+        <item>Assignment</item>
+        <item>Settings</item>
+    </string-array>
+</resources>
