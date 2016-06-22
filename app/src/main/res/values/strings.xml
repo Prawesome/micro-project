@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Learnera</string>
-    <string name="action_settings">Settings</string>
     <string name="drawer_open">Drawer opened</string>
     <string name="drawer_close">Drawer closed</string>
+    <string name="login">Login</string>
+    <string name="screen_login">please log in</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>
