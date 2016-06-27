@@ -1,15 +1,16 @@
 package com.it.learnera;
 
 import android.content.res.Configuration;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 
@@ -40,15 +41,20 @@ public class MainActivity extends AppCompatActivity {
 
         //Navigation drawer implementation starts here
         mDrawerArray = getResources().getStringArray(R.array.navArray);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView)findViewById(R.id.drawer_list);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.drawer_list);
         mDrawerTitle = getTitle().toString();
 
-        //Navigation list implementation
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mDrawerArray));
+        ObjectDrawerItem[] drawerItem = new ObjectDrawerItem[3];
+
+        drawerItem[0] = new ObjectDrawerItem("Announcement");
+        drawerItem[1] = new ObjectDrawerItem("Notes");
+        drawerItem[2] = new ObjectDrawerItem("Assignments");
+
+        DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.list_navigation_item, drawerItem);
+        mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-        //Navigation drawer toggle implementation
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,
                 mDrawerLayout,
@@ -76,19 +82,49 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         if(mDrawerToggle.onOptionsItemSelected(item))
             return true;
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    private void selectItem(int position) {
+        Fragment fragment = null;
+        switch (position) {
+            case 0:
+                fragment = new AnnouncementFragment();
+                break;
+            case 1:
+            //    fragment = new NotesFragment();
+                break;
+            case 2:
+            //    fragment = new AssignmentFragment();
+                break;
+            case 3:
+            //    fragment = new SettingsFragment();
+                break;
+            default:
+                break;
+        }
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            getSupportActionBar().setTitle(mDrawerArray[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+        } else {
+            Log.e("FRAGMENT_CALL", "Fragment cant be called");
+        }
     }
 }
