@@ -8,8 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Announecment"
-        android:id="@+id/fragmentAnnouncement"
+        android:text="Notes"
+        android:id="@+id/fragmentNotes"
         android:layout_gravity="center_horizontal"
         android:background="@android:color/white" />
 

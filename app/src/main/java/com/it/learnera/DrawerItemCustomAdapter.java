@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 /**
  * Created by Prejith on 6/27/2016.
+ * Custom implementation of adapter for Navigation Drawer
  */
 
 public class DrawerItemCustomAdapter extends ArrayAdapter<ObjectDrawerItem> {
