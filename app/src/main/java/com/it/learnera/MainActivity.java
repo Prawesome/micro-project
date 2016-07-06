@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+    private Toolbar mToolbar;
 
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
@@ -46,11 +48,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
         //Navigation drawer implementation starts here
         mDrawerArray = getResources().getStringArray(R.array.navArray);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.drawer_list);
-        mTitle = mDrawerTitle = getTitle();
+        mTitle = mDrawerTitle = getApplicationInfo().loadLabel(getPackageManager());
 
         //initialise object of objectdraweritem for navigation drawer
         ObjectDrawerItem[] drawerItem = new ObjectDrawerItem[3];
@@ -93,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
         mDrawerToggle.setDrawerIndicatorEnabled(true);  //enable default burger indicator
-        mDrawerLayout.setDrawerListener(mDrawerToggle); //set listener for nav drawer as mdrawertoggle
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true); //Nav drawer implementation end
     }
